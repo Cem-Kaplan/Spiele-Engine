@@ -8,6 +8,7 @@
 #include <QApplication>
 #include <QWidget>
 #include <QPushButton>
+#include <cstdio>
 
 int game(void) { 
     InitWindow(800, 600, "Game Engine");
@@ -158,16 +159,25 @@ int main(int argc, char *argv[])
 
     QWidget mainWindow;
     mainWindow.setWindowTitle("Game Engine von Cem");
-    
+    mainWindow.resize(1000, 500);
+
     QPushButton debugButton("Test", &mainWindow);
     debugButton.resize(200, 50);
     debugButton.move(10, 10);
-
+    
+    QPushButton stopButton("Stop Test", &mainWindow);
+    stopButton.resize(200, 50);
+    stopButton.move(10, 70);
+    
     mainWindow.show();
 
     QObject::connect(&debugButton, &QPushButton::clicked, [&]() {
 	game();
     }); 
+
+    QObject::connect(&stopButton, &QPushButton::clicked, [&]() {
+        std::printf("Game ends");
+    });
 
     app.exec();
 
