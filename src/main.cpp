@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <QThread>
 #include <atomic>
+#include <QProcess>
 
 std::atomic<bool> running{true};
 
@@ -174,6 +175,10 @@ int main(int argc, char *argv[])
     stopButton.resize(200, 50);
     stopButton.move(10, 70);
     
+    QPushButton buildButton("Build", &mainWindow);
+    buildButton.resize(200, 50);
+    buildButton.move(10, 130);
+    
     mainWindow.show();
 
     class GameWorker : public QThread {
@@ -193,6 +198,14 @@ int main(int argc, char *argv[])
 
     QObject::connect(&stopButton, &QPushButton::clicked, [&]() {
         running = false;
+    });
+
+    QObject::connect(&buildButton, &QPushButton::clicked, [&]() {
+        QProcess* build = new QProcess(nullptr);
+        QString program = "../build_game.sh"; 
+        QStringList arguments;
+        build->start(program, arguments);
+
     });
 
     app.exec();
