@@ -9,9 +9,14 @@
 #include <QWidget>
 #include <QPushButton>
 #include <cstdio>
+#include <QThread>
+#include <atomic>
+
+std::atomic<bool> running{true};
 
 int game(void) { 
-    InitWindow(800, 600, "Game Engine");
+
+    InitWindow(800, 600, "Cem's Game Engine");
 
     const int screenWidth  = GetScreenWidth();
     const int screenHeight = GetScreenHeight();
@@ -47,7 +52,7 @@ int game(void) {
 
     SetTargetFPS(60);
 
-    while (!WindowShouldClose())
+    while (running && !WindowShouldClose())
     {
     /* ================= INPUT ================= */
 
@@ -171,12 +176,23 @@ int main(int argc, char *argv[])
     
     mainWindow.show();
 
+    class GameWorker : public QThread {
+    protected:
+        void run() override {
+            running = true;
+            game();
+        }
+    };
+    
+    auto* worker = new GameWorker();
+
     QObject::connect(&debugButton, &QPushButton::clicked, [&]() {
-	game();
+        worker->start();
+
     }); 
 
     QObject::connect(&stopButton, &QPushButton::clicked, [&]() {
-        std::printf("Game ends");
+        running = false;
     });
 
     app.exec();
