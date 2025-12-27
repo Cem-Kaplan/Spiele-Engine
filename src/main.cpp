@@ -12,6 +12,7 @@
 #include <QThread>
 #include <atomic>
 #include <QProcess>
+#include <QDebug>
 
 std::atomic<bool> running{true};
 
@@ -202,10 +203,10 @@ int main(int argc, char *argv[])
 
     QObject::connect(&buildButton, &QPushButton::clicked, [&]() {
         QProcess* build = new QProcess(nullptr);
-        QString program = "../build_game.sh"; 
+        QString program = "../build_game.sh";
         QStringList arguments;
         build->start(program, arguments);
-
+        qDebug() << "Build started";
     });
 
     app.exec();
