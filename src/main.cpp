@@ -187,7 +187,28 @@ int main(int argc, char *argv[])
     QWidget settingsWindow;
     settingsWindow.setWindowTitle("Engine Settings");
     settingsWindow.resize(500, 250);
-    
+
+    mainWindow.setStyleSheet("QWidget {"
+        " background-color: #0a0029"
+        "}"
+    );
+
+    debugButton.setStyleSheet("QPushButton {"
+        " color: white"
+        "}"
+    );
+    stopButton.setStyleSheet("QPushButton {"
+        " color: white"
+        "}"
+    );
+    settingsButton.setStyleSheet("QPushButton {"
+        " color: white"
+        "}"
+    );
+    buildButton.setStyleSheet("QPushButton {"
+        " color: white"
+        "}"
+    );
     mainWindow.show();
 
     class GameWorker : public QThread {
