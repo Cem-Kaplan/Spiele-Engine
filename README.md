@@ -2,7 +2,7 @@
 
 Hier hab ich eine Spiele Engine mit folgenden Bibliotheken kombiniert:
 ### - QT5 (Benutzeroberfläche)
-### - Libray (Spiele Engine)
+### - Raylib (Spiele Engine)
 
 ausführen auf linux mit:
 
