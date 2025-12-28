@@ -179,6 +179,14 @@ int main(int argc, char *argv[])
     QPushButton buildButton("Build", &mainWindow);
     buildButton.resize(200, 50);
     buildButton.move(10, 130);
+
+    QPushButton settingsButton("Settings", &mainWindow);
+    settingsButton.resize(200, 50);
+    settingsButton.move(10, 190);
+
+    QWidget settingsWindow;
+    settingsWindow.setWindowTitle("Engine Settings");
+    settingsWindow.resize(500, 250);
     
     mainWindow.show();
 
@@ -207,6 +215,11 @@ int main(int argc, char *argv[])
         QStringList arguments;
         build->start(program, arguments);
         qDebug() << "Build started";
+    });
+
+    QObject::connect(&settingsButton, &QPushButton::clicked, [&]() {
+        qDebug() << "Settings Opened";
+        settingsWindow.show();
     });
 
     app.exec();
