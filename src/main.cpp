@@ -82,8 +82,21 @@ int main(int argc, char *argv[])
             game();
         }
     };
+
+    class GameBuilder : public QThread {
+    protected:
+        void run() override {
+            running = false;
+            QProcess* build = new QProcess(nullptr);
+            QString program = "./build_game.sh";
+            QStringList arguments;
+            build->start(program, arguments);
+            qDebug() << "Running build Command";
+        }
+    };
     
     auto* worker = new GameWorker();
+    auto* build_worker = new GameBuilder();
 
     QObject::connect(&debugButton, &QPushButton::clicked, [&]() {
         worker->start();
@@ -95,11 +108,7 @@ int main(int argc, char *argv[])
     });
 
     QObject::connect(&buildButton, &QPushButton::clicked, [&]() {
-        QProcess* build = new QProcess(nullptr);
-        QString program = "../build_game.sh";
-        QStringList arguments;
-        build->start(program, arguments);
-        qDebug() << "Build started";
+        build_worker->start();
     });
 
     QObject::connect(&settingsButton, &QPushButton::clicked, [&]() {

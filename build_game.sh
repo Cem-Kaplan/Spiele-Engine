@@ -2,6 +2,6 @@
 
 set -e
 
-g++ -fPIC -o main.o src/main.cpp -I include -L liblinux -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 `pkg-config --cflags --libs Qt5Widgets`
+g++ -o game.o src/main_game.cpp -I include -L liblinux -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
 echo "BUILD OK"
